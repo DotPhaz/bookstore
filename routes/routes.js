@@ -41,12 +41,38 @@ export default async function routes(fastify, options) {
         return result
     })
 
+    //Get a book
     fastify.get('/api/books/:book', async (req, res) => {
         const id =  new ObjectId(req.params.book)
         const result = await collection.findOne({_id: id})
         if (!result) {
             throw new Error('Invalid value')
         }
+        return result
+    })
+
+
+    const updateBookBodyJsonSchema = {
+        type: "object",
+        required: [],
+        properties: {
+            'name': {type: 'string'},
+            'author': {type: 'string'},
+            'year': {type: 'number'}
+        }
+    }
+
+    const updateSchema = {
+        body: updateBookBodyJsonSchema
+    }
+
+
+    //Update a book
+    fastify.put('/api/books/:book/update', { updateSchema },  async (req, res) => {
+        const id = new ObjectId(req.params.book)
+        const result = await collection.updateOne({_id: id}, {
+            $set: req.body
+        })
         return result
     })
 }
