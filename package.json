@@ -1,0 +1,21 @@
+{
+  "name": "bookstore",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon server"
+  },
+  "keywords": [],
+  "author": "Eliphaz Bouye",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/mongodb": "^6.0.1",
+    "@fastify/swagger": "^7.4.1",
+    "fastify": "^4.3.0",
+    "fastify-plugin": "^4.0.0",
+    "nodemon": "^2.0.19"
+  }
+}
