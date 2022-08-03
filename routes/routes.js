@@ -8,13 +8,12 @@ export default async function routes(fastify, options) {
     })
 
     fastify.get('/api/books', async (req, res) => {
-        const result = await collection.find().toArray()
-        console.log(result);
-        if (result.length === 0) {
+        const book = await collection.find().toArray()
+        
+        if (book.length === 0) {
             throw new Error("No documents found")
         }
-
-        return result
+        return book
     })
 
     const bookBodyJsonSchema = {
@@ -33,25 +32,25 @@ export default async function routes(fastify, options) {
 
     //Add new book
     fastify.post('/api/books', schema, async (req, res) => {
-        const result = await collection.insertOne({
+        const book = await collection.insertOne({
             name: req.body.name,
             author: req.body.author,
             year: req.body.year  
         })
-        return result
+        return book
     })
 
     //Get a book
     fastify.get('/api/books/:book', async (req, res) => {
         const id =  new ObjectId(req.params.book)
-        const result = await collection.findOne({_id: id})
-        if (!result) {
+        const book = await collection.findOne({_id: id})
+        if (!book) {
             throw new Error('Invalid value')
         }
-        return result
+        return book
     })
 
-
+    //Update a book
     const updateBookBodyJsonSchema = {
         type: "object",
         required: [],
@@ -66,13 +65,25 @@ export default async function routes(fastify, options) {
         body: updateBookBodyJsonSchema
     }
 
-
-    //Update a book
     fastify.put('/api/books/:book/update', { updateSchema },  async (req, res) => {
         const id = new ObjectId(req.params.book)
-        const result = await collection.updateOne({_id: id}, {
+        const book = await collection.updateOne({_id: id}, {
             $set: req.body
         })
-        return result
+
+        if (!book) {
+            throw new Error('Invalid value')
+        }
+        return book
+    })
+
+    //Delete a book
+    fastify.delete('/api/books/:book/delete', async (req, res) => {
+        const id = new ObjectId(req.params.book)
+        const book = await collection.deleteOne({_id: id})
+        if (!book) {
+            throw new Error('Invalid value')
+        }
+        return book
     })
 }
