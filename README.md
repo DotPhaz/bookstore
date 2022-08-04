@@ -7,4 +7,6 @@ Differents endpoints of the api:
  - POST `/api/books` to add new book
  - GET `/api/books/book_id` to display a book
  - PUT `/api/books/book_id/update` to update a book
- - DELETE `/api/books/book_id/delete` to delete a book
+ - DELETE `/api/books/book_id/delete` to delete a book  
+ 
+You can get access to OpenAPI documentation for this project from this end-point here : `/documentation`
