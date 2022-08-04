@@ -9,9 +9,6 @@ fastify.register(swagger)
 fastify.register(dbConnection)
 fastify.register(routes)
 
-// fastify.swagger()
-
-
 const start = async () => {
     try {
         await fastify.listen({port: 8000})

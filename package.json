@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "npx nodemon server",
-    "test": "jest"
+    "test": "jest",
+    "test:unit": "jest --testPathIgnorePatterns \"/(routes|workflows)/\""
   },
   "keywords": [],
   "author": "Eliphaz Bouye",
