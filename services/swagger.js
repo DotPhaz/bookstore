@@ -37,8 +37,6 @@ async function swagger(fastify, options) {
             docExpansion: 'full',
             deepLinking: false
         },
-        staticCSP: true,
-        transformStaticCSP: (header) => header,
         exposeRoute: true
     })
 }

@@ -14,9 +14,18 @@ export default async function routes(fastify, options) {
         response: {
           200: {
             description: 'response and schema description',
+            type: 'object',
             properties: {
                 books: { type: 'array' }
-            }
+            },
+            example: { 
+                    books: [ 
+                        {name: 'Test 1', author: "Jon Doe", year: 2019},
+                        {name: 'Great Thing', author: "Doe Jhon", year: 1998},
+                        {name: 'Programming', author: "Coder", year: 2022}
+                    ]
+            },
+            
           }
         }
       }
@@ -45,13 +54,13 @@ export default async function routes(fastify, options) {
         body: bookBodyJsonSchema,
         response: {
             200: {
-              description: 'Successful book added',
-              type: 'object',
-              properties: {
-                book: { type: 'string' }
-              }
-        },
-    }
+                description: "Add new book",
+                type: 'array',
+                example: [ 
+                        {acknowledged: "boolean", insertedId: "book_id"}
+                    ]
+                }
+        }
 }
 
     //Add new book
@@ -64,17 +73,53 @@ export default async function routes(fastify, options) {
         if(!book){
             throw new Error("Invalid value")
         }
-        res.send({book: "Book added"})
+        res.send([book])
     })
 
+
+    const getBookBodyJsonSchema = {
+        type: "object",
+        required: ['name', 'author', 'year'],
+        properties: {
+            "name": {type: 'string'},
+            "author": {type: 'string'},
+            "year": {type: 'number'}
+        }
+    }
+
     //Get a book
-    fastify.get('/api/books/:book', async (req, res) => {
+    fastify.get('/api/books/:book', { schema: {
+        description: "Get a book",
+        tags: ['books'],
+        params: {
+            type: 'object',
+            properties: {
+                book: {type: 'string'}
+            }
+        },
+        response: {
+            200: {
+              description: "Get book",
+              type: 'object',
+              properties: {
+                book: {type: 'array', description: "received book"}
+              },
+              example: { 
+                  book: [ 
+                      {name: 'Programming', author: "Coder", year: 2022}
+                  ]
+              },
+            },
+        },
+    }
+
+    }, async (req, res) => {
         const id =  new ObjectId(req.params.book)
         const book = await collection.findOne({_id: id})
         if (!book) {
             throw new Error('Invalid value')
         }
-        return book
+         res.send({book: [book]})
     })
 
     //Update a book
@@ -86,7 +131,6 @@ export default async function routes(fastify, options) {
             'year': {type: 'number'}
         }
     }
-
 
     fastify.put('/api/books/:book/update', { schema: {
         description: "Book update",
@@ -104,6 +148,9 @@ export default async function routes(fastify, options) {
                 type: 'object',
                 properties: {
                     book: {type: 'string'}
+                },
+                example: {
+                    book: "Book info"                    
                 }
             }
         }
@@ -120,7 +167,7 @@ export default async function routes(fastify, options) {
         } else if(book.modifiedCount === 0) {
             res.send({book: "This book has already updated"})
         }
-        res.send({book: "Book has been updated"})
+        res.send({book: book})
     })
 
     //Delete a book
