@@ -1,6 +1,6 @@
+'use strict'
 
-
-const routes = require('../routes/routes')
+import routes from '../routes/routes'
 
 
 
