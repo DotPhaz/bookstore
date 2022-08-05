@@ -1,12 +1,12 @@
 import { ObjectId } from "@fastify/mongodb"
 
 export default async function routes(fastify, options) {
-    const collection = fastify.mongo.db.collection('booksCollection')
-
+    
     fastify.get('/', async (req, res) => {
         return {hello: 'world'}
     })
-
+    
+    const collection = fastify.mongo.db.collection('booksCollection')
     fastify.get('/api/books', {
         schema: {
         description: "Books end-points",
