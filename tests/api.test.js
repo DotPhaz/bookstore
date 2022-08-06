@@ -21,7 +21,7 @@ describe("Get /", () => {
       })
     expect(response.statusCode).toEqual(200)
     expect(response.json()).toHaveProperty('books')
-    // expect(response.json().hello).not.toBeNull()
+    expect(response.json().books).not.toBeNull()
   })
   
   test("api/books/id should return error 500 and internal error", async () => {
@@ -32,9 +32,6 @@ describe("Get /", () => {
     expect(response.statusCode).toEqual(500)
     expect(response.json()).toHaveProperty('error')
     expect(response.json().error).toBe("Internal Server Error")
-    // expect(response).toThrow()
-    // console.log(response.json())
-    // expect(response.json().hello).not.toBeNull()
   })
   
   test("api/books/id should return error 500 and internal error", async () => {
@@ -45,9 +42,6 @@ describe("Get /", () => {
     expect(response.statusCode).toEqual(500)
     expect(response.json()).toHaveProperty('error')
     expect(response.json().error).toBe("Internal Server Error")
-    // expect(response).toThrow()
-    // console.log(response.json())
-    // expect(response.json().hello).not.toBeNull()
   })
 })
 
@@ -66,7 +60,7 @@ describe("POST /api/books", () => {
       })
       expect(response.statusCode).toEqual(200)
       expect(response.json()[0]).toHaveProperty('insertedId')
-      // expect(response.json().hello).not.toBeNull()
+      expect(response.json().inserdId).not.toBeNull()
   })
 
 })
