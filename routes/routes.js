@@ -77,16 +77,6 @@ export default async function routes(fastify, options) {
     })
 
 
-    const getBookBodyJsonSchema = {
-        type: "object",
-        required: ['name', 'author', 'year'],
-        properties: {
-            "name": {type: 'string'},
-            "author": {type: 'string'},
-            "year": {type: 'number'}
-        }
-    }
-
     //Get a book
     fastify.get('/api/books/:book', { schema: {
         description: "Get a book",
