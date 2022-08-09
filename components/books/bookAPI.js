@@ -1,12 +1,11 @@
-import { ObjectId } from "@fastify/mongodb"
+import bookDAL from './bookDAL.js'
 
-export default async function routes(fastify, options) {
+async function router(fastify, options) {
     
     fastify.get('/', async (req, res) => {
         return {hello: 'world'}
     })
     
-    const collection = fastify.mongo.db.collection('booksCollection')
     fastify.get('/api/books', {
         schema: {
         description: "Books end-points",
@@ -30,7 +29,9 @@ export default async function routes(fastify, options) {
         }
       }
     }, async (req, res) => {
-        const books = await collection.find().toArray()
+        new bookDAL();
+        
+        const books = await bookDAL.getAllBook();
         console.log(books);
         if (books.length === 0) {
             throw new Error("No documents found")
@@ -194,3 +195,6 @@ export default async function routes(fastify, options) {
         res.send({book: 'Book deleted'})
     })
 }
+
+
+export default router

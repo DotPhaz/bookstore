@@ -1,8 +1,19 @@
 import fastifyPlugin from "fastify-plugin"
+import fastifyMongodb from "@fastify/mongodb";
 import fastifySwagger from "@fastify/swagger";
-import fastify from "fastify";
 
-async function swagger(fastify, options) {
+
+//MongoDB Connector Service
+export const dbConnector = async (fastify, options) => {
+    fastify.register(fastifyMongodb, {
+        forceClose: true,
+        url: 'mongodb://localhost:27017/bookstore'
+    })
+}
+
+
+//Swagger Service
+export const swagger = async (fastify, options) => {
     fastify.register(fastifySwagger, {
         routePrefix: '/documentation',
         swagger: {
@@ -42,4 +53,3 @@ async function swagger(fastify, options) {
 }
 
 
-export default fastifyPlugin(swagger)
