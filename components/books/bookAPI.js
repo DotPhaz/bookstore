@@ -31,7 +31,7 @@ async function router(fastify, options) {
     }, async (req, res) => {
         new bookDAL();
         
-        const books = await bookDAL.getAllBook();
+        const books = await bookDAL.getAllBook;
         console.log(books);
         if (books.length === 0) {
             throw new Error("No documents found")

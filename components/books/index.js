@@ -1,11 +1,10 @@
 import Fastify from "fastify"
-import { dbConnector, swagger} from './bookService.js'
+import { swaggerPlug} from './bookService.js'
 import router from './bookAPI.js'
 
 const fastify = Fastify({logger: true})
 
-fastify.register(swagger)
-fastify.register(dbConnector)
+fastify.register(swaggerPlug)
 fastify.register(router)
 
 export const start = async () => {
